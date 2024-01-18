@@ -1,5 +1,7 @@
 package com.ppp.gsdemo2;
 
+import java.util.Random;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,6 +12,7 @@ public class Gsdemo2Application {
 		SpringApplication.run(Gsdemo2Application.class, args);
 		checkSelectStar();
 		switchCaseRule(5);
+		nestedIfs();
 	}
 
 	private static void checkSelectStar() {
@@ -42,5 +45,27 @@ public class Gsdemo2Application {
     public static void foo(String bar) throws Exception
     {
         throw new Exception("My Message");    
+    }
+    
+    public static void nestedIfs() {
+    	Random random = new Random();
+    	
+    	boolean condition1 = random.nextBoolean();
+    	boolean condition2 = random.nextBoolean();
+    	boolean condition3 = random.nextBoolean();
+    	
+		if (condition1) // Compliant (depth = 1)
+		{
+			if (condition2) // Compliant (depth = 2)
+			{
+				for (int i = 0; i < 10; i++) // Compliant (depth = 3)
+				{
+					if (condition3) // Non-compliant (depth > 3)
+					{
+						System.out.println("This is nested statement.");
+					}
+				}
+			}
+		}
     }
 }
